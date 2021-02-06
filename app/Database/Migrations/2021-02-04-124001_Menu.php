@@ -8,34 +8,43 @@ class Menu extends Migration
 	{
 		// Membuat kolom/field untuk tabel menu
 		$this->forge->addField([
-			'id_menu'          => [
+			'id_menu'=> [
+				'type'=> 'INT',
+				'unsigned'=> true,
+				'auto_increment'=> true
+			],
+			'id_kategori'=> [
+				'type'=> 'INT',
+			],
+			'nama_menu'=> [
+				'type'=> 'VARCHAR',
+				'constraint'=> '50'
+			],
+			'jenis_menu'=> [
+				'type'=> 'ENUM',
+				'constraint'=> ['Stok', 'Non Stok'],
+			],
+			'stok'       => [
 				'type'           => 'INT',
-				'unsigned'       => true,
-				'auto_increment' => true
+				'default'     => 0
 			],
-			'title'       => [
-				'type'           => 'VARCHAR',
-				'constraint'     => '255'
+			'status_nonstok'=> [
+				'type'=> 'ENUM',
+				'constraint'=> ['Tersedia', 'Tidak Tersedia'],
+				'null'=> true
 			],
-			'author'      => [
-				'type'           => 'VARCHAR',
-				'constraint'     => 100,
-				'default'        => 'John Doe',
+			'status_menu'=> [
+				'type'=> 'ENUM',
+				'constraint'=> ['Aktif', 'Tidak Aktif'],
 			],
-			'content' => [
-				'type'           => 'TEXT',
-				'null'           => true,
+			'harga'=> [
+				'type'=> 'INT',
+				'default'=> 0
 			],
-			'status'      => [
-				'type'           => 'ENUM',
-				'constraint'     => ['published', 'draft'],
-				'default'        => 'draft',
-			],
-			'created_at DATETIME CURRENT_TIMESTAMP'
 		]);
 
 		// Membuat primary key
-		$this->forge->addKey('id', TRUE);
+		$this->forge->addKey('id_menu', TRUE);
 
 		// Membuat tabel menu
 		$this->forge->createTable('menu', TRUE);
