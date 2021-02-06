@@ -85,7 +85,7 @@ class Kategori extends ResourceController
     // update data
     public function update($id = NULL)
     {
-        $nama_kategori= $this->request->getRawInput('nama_kategori');
+        $nama_kategori= $this->request->getPost('nama_kategori');
         $data = [
             'nama_kategori' => $nama_kategori,
         ];
