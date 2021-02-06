@@ -33,4 +33,12 @@ class Pesanan_model extends Model {
     {
         return $this->db->table($this->table)->delete([$this->primaryKey => $id]);
     }
+
+    public function getPesananAntrian()
+    {
+        // $this->join('pesanan', 'pesanan.id_pesanan = pesanan_detail.id_pesanan', 'left');
+        // $this->join('menu', 'menu.id_menu = pesanan_detail.id_menu', 'left');
+        // $this->where('pesanan_detail.status_pesanan_detail!=','Selesai');
+        return $this->findAll();
+    }
 } 

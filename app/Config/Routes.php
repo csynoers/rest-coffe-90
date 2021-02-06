@@ -40,6 +40,10 @@ $routes->add('menu/update/(:num)','Menu::update/$1');
 
 $routes->resource('pesanan');
 $routes->add('pesanan/update/(:num)','Pesanan::update/$1');
+$routes->add('pesanan/dapur','Pesanan::dapur');
+
+$routes->resource('detail');
+$routes->add('detail/update/(:num)','Detail::update/$1');
 
 // Equivalent to the following:
 // $routes->get('kategori/new',                'kategori::new');

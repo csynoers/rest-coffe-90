@@ -15,6 +15,20 @@ class Pesanan_detail_model extends Model {
             return $this->getWhere([$this->primaryKey => $id])->getRowObject();
         }  
     }
+    public function getPesananDetailBelumSiap()
+    {
+        $this->join('pesanan', 'pesanan.id_pesanan = pesanan_detail.id_pesanan', 'left');
+        $this->join('menu', 'menu.id_menu = pesanan_detail.id_menu', 'left');
+        $this->where('pesanan_detail.status_pesanan_detail','Belum Siap');
+        return $this->findAll();
+    }
+    public function getPesananDetailAntrian()
+    {
+        $this->join('pesanan', 'pesanan.id_pesanan = pesanan_detail.id_pesanan', 'left');
+        $this->join('menu', 'menu.id_menu = pesanan_detail.id_menu', 'left');
+        $this->where('pesanan_detail.status_pesanan_detail!=','Selesai');
+        return $this->findAll();
+    }
      
     public function insertPesananDetail($data)
     {

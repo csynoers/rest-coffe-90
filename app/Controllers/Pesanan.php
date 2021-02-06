@@ -25,15 +25,41 @@ class Pesanan extends ResourceController
         // ------------------------------------------------------------------------
         // modification json output value type: int
         // ------------------------------------------------------------------------
-        $rows = $this->model->findAll();
+        
+        if ( $this->request->getGet('status_pesanan') ) {
+            if ( $this->request->getGet('status_pesanan') == 'Belum Siap' ) {
+                $rows_all = $this->pesanan_detail->getPesananDetailBelumSiap();
+            } elseif ( $this->request->getGet('status_pesanan') == 'daftar_antrian' ) {
+                $rows = $this->pesanan->getPesanan();
+                foreach ($rows as $key => $value) {
+                    $value['detail'] = $this->pesanan_detail->where('id_pesanan',$value['id_pesanan'])->findAll();
+                    $rows_all[] = $value;
+                }
+            }
+        } else {
+            $rows_all = $this->model->findAll();
+        }
         // ------------------------------------------------------------------------
         // modification json output value type: int
         // ------------------------------------------------------------------------
-        foreach ($rows as $key => $value) {
-            $value['nama_kategori'] = $this->kategori->getKategori($value['id_kategori'])->nama_kategori;
-            $rows_all[] = $value;
-        }
         return $this->setResponseAPI($rows_all,200);
+    }
+
+    public function dapur()
+    {
+        // ------------------------------------------------------------------------
+        // modification json output value type: int
+        // ------------------------------------------------------------------------
+        
+        // $rows = $this->menu->getMenuBelumSiap();
+        // ------------------------------------------------------------------------
+        // modification json output value type: int
+        // ------------------------------------------------------------------------
+        // foreach ($rows as $key => $value) {
+        //     $value['nama_kategori'] = $this->kategori->getKategori($value['id_kategori'])->nama_kategori;
+        //     $rows_all[] = $value;
+        // }
+        return $this->setResponseAPI(['tes'],200);
     }
 
     /* membuat data baru */
@@ -180,6 +206,27 @@ class Pesanan extends ResourceController
             ];
             return $this->setResponseAPI($response, 200);
         }
+    }
+
+    public function update_status($id = NULL)
+    {
+        // $nama_menu= $this->request->getPost('nama_menu');
+        
+        // $data = [
+        //     'nama_menu' => $nama_menu,
+        // ];
+
+        // $simpan = $this->model->updateMenu($data,$id);
+        // if($simpan){
+        //     $msg = ['message' => 'Updated data successfully'];
+        //     $response = [
+        //         'status' => 201,
+        //         'error' => false,
+        //         'data' => $msg,
+        //     ];
+        //     return $this->setResponseAPI($response, 200);
+        // }
+        return $this->setResponseAPI(['tes'], 200);
     }
     
     protected function setResponseAPI($body,$statusCode)
