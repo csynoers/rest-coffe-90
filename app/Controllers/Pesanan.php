@@ -1,11 +1,15 @@
 <?php namespace App\Controllers;
 
 use App\Models\Kategori_model;
+use App\Models\Menu_model;
+use App\Models\Pesanan_model;
+use App\Models\Pesanan_detail_model;
+use App\Models\Pembayaran_detail_model;
 use CodeIgniter\RESTful\ResourceController;
 
-class Menu extends ResourceController
+class Pesanan extends ResourceController
 {
-    protected $modelName = 'App\Models\Menu_model';
+    protected $modelName = 'App\Models\Pesanan_model';
     protected $format    = 'json';
 
     public function __construct(){

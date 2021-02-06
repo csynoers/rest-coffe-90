@@ -34,6 +34,10 @@ $routes->get('/', 'Home::index');
 
 $routes->resource('kategori');
 $routes->add('kategori/update/(:num)','Kategori::update/$1');
+
+$routes->resource('menu');
+$routes->add('menu/update/(:num)','Menu::update/$1');
+
 // Equivalent to the following:
 // $routes->get('kategori/new',                'kategori::new');
 // $routes->post('kategori/create',            'kategori::create');
