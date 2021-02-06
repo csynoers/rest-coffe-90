@@ -14,6 +14,7 @@ class Pesanan extends ResourceController
 
     public function __construct(){
         $this->kategori = new Kategori_model();
+        $this->menu = new Menu_model();
         $this->pesanan = new Pesanan_model();
         $this->pesanan_detail = new Pesanan_detail_model();
         $this->pembayaran = new Pembayaran_model();
@@ -69,6 +70,12 @@ class Pesanan extends ResourceController
                 'keterangan' => $value->keterangan,
                 'status_pesanan_detail' => $value->status_pesanan_detail,
             ];
+
+            if ( $value->jenis_menu == 'Stok' ) {
+                // update stok menu
+                $this->menu->updateMenuStok($value->jumlah,$value->id_menu);
+            }
+
             // insert pesanan detail
             $this->pesanan_detail->insertPesananDetail($data_pesanan_detail);
         }
@@ -77,6 +84,7 @@ class Pesanan extends ResourceController
 
         // return $this->setResponseAPI($data_pesanan, 200);
         // return $this->setResponseAPI(, 200);
+        // return $this->setResponseAPI($data, 200);
         return $this->setResponseAPI($data, 200);
         
         // $data = [

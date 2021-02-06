@@ -25,6 +25,12 @@ class Menu_model extends Model {
     {
         return $this->db->table($this->table)->update($data, [$this->primaryKey => $id]);
     }
+    public function updateMenuStok($jumlah, $id)
+    {
+    //     $this->db->set('usage', 'usage+1', FALSE);
+    // $this->db->where('tag', 'java');
+        return $this->db->table($this->table)->set('stok', "stok-{$jumlah}", FALSE)->where($this->primaryKey, $id)->update();
+    }
  
     public function deleteMenu($id)
     {
