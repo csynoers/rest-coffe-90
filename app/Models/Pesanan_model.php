@@ -2,12 +2,12 @@
 
 use CodeIgniter\Model;
  
-class Menu_model extends Model {
+class Pesanan_model extends Model {
  
-    protected $table = 'menu';
-    protected $primaryKey = 'id_menu';
+    protected $table = 'pesanan';
+    protected $primaryKey = 'id_pesanan';
  
-    public function getMenu($id = false)
+    public function getPesanan($id = false)
     {
         if($id === false){
             return $this->findAll();
@@ -16,17 +16,20 @@ class Menu_model extends Model {
         }  
     }
      
-    public function insertMenu($data)
+    public function insertPesanan($data)
     {
-        return $this->db->table($this->table)->insert($data);
+        $builder = $this->db->table($this->table);
+        $builder->insert($data);
+        return $this->db->insertID();
+        // return $this->db->table($this->table)->insert($data)->insertID();
     }
  
-    public function updateMenu($data, $id)
+    public function updatePesanan($data, $id)
     {
         return $this->db->table($this->table)->update($data, [$this->primaryKey => $id]);
     }
  
-    public function deleteMenu($id)
+    public function deletePesanan($id)
     {
         return $this->db->table($this->table)->delete([$this->primaryKey => $id]);
     }

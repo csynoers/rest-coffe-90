@@ -4,10 +4,10 @@ use CodeIgniter\Model;
  
 class Pembayaran_model extends Model {
  
-    protected $table = 'menu';
-    protected $primaryKey = 'id_menu';
+    protected $table = 'pembayaran';
+    protected $primaryKey = 'id_pembayaran';
  
-    public function getMenu($id = false)
+    public function getPembayaran($id = false)
     {
         if($id === false){
             return $this->findAll();
@@ -16,17 +16,17 @@ class Pembayaran_model extends Model {
         }  
     }
      
-    public function insertMenu($data)
+    public function insertPembayaran($data)
     {
         return $this->db->table($this->table)->insert($data);
     }
  
-    public function updateMenu($data, $id)
+    public function updatePembayaran($data, $id)
     {
         return $this->db->table($this->table)->update($data, [$this->primaryKey => $id]);
     }
  
-    public function deleteMenu($id)
+    public function deletePembayaran($id)
     {
         return $this->db->table($this->table)->delete([$this->primaryKey => $id]);
     }
