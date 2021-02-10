@@ -36,9 +36,10 @@ class Pesanan_model extends Model {
 
     public function getPesananAntrian()
     {
-        // $this->join('pesanan', 'pesanan.id_pesanan = pesanan_detail.id_pesanan', 'left');
-        // $this->join('menu', 'menu.id_menu = pesanan_detail.id_menu', 'left');
-        // $this->where('pesanan_detail.status_pesanan_detail!=','Selesai');
-        return $this->findAll();
+        
+        $this->join('pesanan_detail', 'pesanan.id_pesanan = pesanan_detail.id_pesanan', 'right');
+        $this->where('pesanan_detail.status_pesanan_detail!=','Selesai');
+        $this->groupBy('pesanan.id_pesanan');
+        return $this->get()->getResult();
     }
 } 

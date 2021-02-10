@@ -25,14 +25,18 @@ class Pesanan extends ResourceController
         // ------------------------------------------------------------------------
         // modification json output value type: int
         // ------------------------------------------------------------------------
-        
+        $rows_all = [];
+
         if ( $this->request->getGet('status_pesanan') ) {
             if ( $this->request->getGet('status_pesanan') == 'Belum Siap' ) {
                 $rows_all = $this->pesanan_detail->getPesananDetailBelumSiap();
             } elseif ( $this->request->getGet('status_pesanan') == 'daftar_antrian' ) {
-                $rows = $this->pesanan->getPesanan();
+                $rows = $this->pesanan->getPesananAntrian();
                 foreach ($rows as $key => $value) {
-                    $value['detail'] = $this->pesanan_detail->where('id_pesanan',$value['id_pesanan'])->findAll();
+                    $value->detail = $this->pesanan_detail
+                        ->join('menu','menu.id_menu=pesanan_detail.id_menu','left')
+                        ->where('id_pesanan',$value->id_pesanan)
+                        ->findAll();
                     $rows_all[] = $value;
                 }
             }

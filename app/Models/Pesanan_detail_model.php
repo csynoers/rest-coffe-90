@@ -6,6 +6,14 @@ class Pesanan_detail_model extends Model {
  
     protected $table = 'pesanan_detail';
     protected $primaryKey = 'id_pesanan_detail';
+    protected $allowedFields = [
+        'id_pesanan',
+        'id_menu',
+        'harga',
+        'jumlah',
+        'keterangan',
+        'status_pesanan_detail',
+    ];
  
     public function getPesananDetail($id = false)
     {
@@ -38,6 +46,11 @@ class Pesanan_detail_model extends Model {
     public function updatePesananDetail($data, $id)
     {
         return $this->db->table($this->table)->update($data, [$this->primaryKey => $id]);
+    }
+
+    public function updateGroupPesan($data, $id_pesanan)
+    {
+        return $this->db->table($this->table)->update($data, ['id_pesanan' => $id_pesanan]);
     }
  
     public function deletePesananDetail($id)
