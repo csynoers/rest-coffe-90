@@ -9,8 +9,15 @@ class Users extends ResourceController
 
     public function index()
     {
-        $rows = $this->model->findAll();
-        return $this->respond($rows,200);
+        if ( empty($this->request->getGet('username')) && empty($this->request->getGet('password')) ) {
+            $data = $this->model->findAll();
+        } else {
+            $data = $this->model
+                ->where('username', $this->request->getGet('username'))
+                ->where('password', $this->request->getGet('password'))
+            ->findAll();
+        }
+        return $this->respond($data,200);
     }
 
     /* membuat users baru */
