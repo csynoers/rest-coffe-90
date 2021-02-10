@@ -6,6 +6,13 @@ class Users_model extends Model {
  
     protected $table = 'users';
     protected $primaryKey = 'id_user';
+    protected $allowedFields = [
+        'username',
+        'password',
+        'nama',
+        'level',
+        'status',
+    ];
  
     public function getuser($id = false)
     {

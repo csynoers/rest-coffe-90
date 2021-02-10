@@ -13,110 +13,48 @@ class Users extends ResourceController
         return $this->respond($rows,200);
     }
 
-    /* membuat kategori baru */
+    /* membuat users baru */
     public function create()
-    {
-        $nama_kategori= $this->request->getPost('nama_kategori');
-        
-        $data = [
-            'nama_kategori' => $nama_kategori,
+    {        
+        $data = $this->request->getRawInput();
+
+        $this->model->insert($data);
+        $response = [
+            'status'   => 201,
+            'error'    => null,
+            'messages' => [
+                'success' => 'Data Saved'
+            ]
         ];
-        
-        $cek = $this->model->where('nama_kategori', $nama_kategori)->findAll();
-        if ( count($cek) > 0 ) {
-            $msg = ['message' => 'Maaf sudah digunakan silahkan coba lagi dengan data yang berbeda'];
-            $response = [
-                'status' => 204,
-                'error' => false,
-                'data' => $msg,
-            ];
-            return $this->setResponseAPI($response, 200);
-        } else {
-            $simpan = $this->model->insertKategori($data);
-            if($simpan){
-                $msg = ['message' => 'Data berhasil dibuat'];
-                $response = [
-                    'status' => 201,
-                    'error' => false,
-                    'data' => $msg,
-                ];
-                return $this->setResponseAPI($response, 200);
-            }
-        }
-        
+         
+        return $this->respondCreated($data, 201);        
     }
 
     /* show data by id */
     public function show($id = NULL)
     {
-        $get = $this->model->getKategori($id);
-        if($get){
-            $code = 200;
-            $response = [
-                'status' => $code,
-                'error' => false,
-                'data' => $get,
-            ];
-        } else {
-            $code = 401;
-            $msg = ['message' => 'Not Found'];
-            $response = [
-                'status' => $code,
-                'error' => true,
-                'data' => $msg,
-            ];
+        $data = $this->model->getUser($id);
+        if($data){
+            return $this->respond($data);
+        }else{
+            return $this->failNotFound('No Data Found with id '.$id);
         }
-        return $this->setResponseAPI($response, $code);
     }
 
     // update data
     public function update($id = NULL)
     {
-        $nama_kategori= $this->request->getPost('nama_kategori');
-        $data = [
-            'nama_kategori' => $nama_kategori,
-        ];
+        $data= $this->request->getRawInput();
 
-        $cek = $this->model->where('nama_kategori', $nama_kategori)->findAll();
-        if ( count($cek) >= 1 ) {
-            $msg = ['message' => 'Maaf sudah digunakan silahkan coba lagi dengan data yang berbeda'];
-            $response = [
-                'status' => 204,
-                'error' => false,
-                'data' => $msg,
-            ];
-            return $this->setResponseAPI($response, 200);
-
-        } else {
-            $simpan = $this->model->updateKategori($data,$id);
-            if($simpan){
-                $msg = ['message' => 'Updated category successfully'];
-                $response = [
-                    'status' => 201,
-                    'error' => false,
-                    'data' => $msg,
-                ];
-                return $this->setResponseAPI($response, 200);
-            }
-            
-        }
-    }
-    
-    protected function setResponseAPI($body,$statusCode)
-    {
-        $options = [
-            'max-age'  => 1200,
-            's-maxage' => 3600,
-            'etag'     => 'abcde'
+        // Insert to Database
+        $this->model->update($id, $data);
+        $response = [
+            'status'   => 200,
+            'error'    => null,
+            'messages' => [
+                'success' => 'Data Updated'
+            ]
         ];
-        
-        $this->response->setHeader('Access-Control-Allow-Origin', '*')
-            ->setHeader('Access-Control-Allow-Headers', '*')
-            ->setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-            // ->setCache($options);
-        // echo '<pre>';
-        // print_r($this);
-        // echo '</pre>';
-        return $this->respond($body, $statusCode);
+        return $this->respond($response);
     }
 }
