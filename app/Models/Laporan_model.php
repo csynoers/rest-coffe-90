@@ -25,7 +25,7 @@ class Laporan_model extends Model {
         $builder = $this->db
             ->table('pesanan_detail')
             ->join('pesanan','pesanan.id_pesanan=pesanan_detail.id_pesanan','left')
-            ->join('menu','menu.id_menu=pesanan_detail.id_pesanan','left')
+            ->join('menu','menu.id_menu=pesanan_detail.id_menu','left')
             ->where('pesanan_detail.status_pesanan_detail=','Selesai')
             ->orderBy('pesanan.tanggal_pesanan','desc')
             ->get();
@@ -37,7 +37,7 @@ class Laporan_model extends Model {
         $builder = $this->db
             ->table('pesanan_detail')
             ->join('pesanan','pesanan.id_pesanan=pesanan_detail.id_pesanan','left')
-            ->join('menu','menu.id_menu=pesanan_detail.id_pesanan','left')
+            ->join('menu','menu.id_menu=pesanan_detail.id_menu','left')
             ->where('pesanan_detail.status_pesanan_detail=','Selesai');
             
             
